@@ -45,12 +45,10 @@ def export_to_csv(user_id, employee_name, task_data):
 
     with open(filename, mode='w', newline='') as csvfile:
         csv_writer = csv.writer(csvfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-        csv_writer.writerow(['User ID', 'Username', 'Task Completed Status', 'Task Title'])
 
         for task in task_data:
             csv_writer.writerow([user_id, employee_name, task['completed'], task['title']])
 
-    print(f"Employee data has been exported to {filename}")
 
 if __name__ == "__main__":
     information_employee()
