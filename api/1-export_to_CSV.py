@@ -7,16 +7,13 @@ from requests import get
 from sys import argv
 import csv
 
-
 def information_employee():
     """
     Returns information about employees
     """
     id_employee = int(argv[1])
     employee_name = ""
-    number_of_done_task = 0
-    total_number_of_task = 0
-    task_title = []
+    task_data = []
 
     url_users = 'https://jsonplaceholder.typicode.com/users'
     url_todos = 'https://jsonplaceholder.typicode.com/todos'
@@ -30,35 +27,30 @@ def information_employee():
 
         for user in response_json_usr:
             if (user['id'] == id_employee):
-                employee_name = user['username']
+                employee_name = user['name']
 
                 for tod in response_json_tod:
                     if tod['userId'] == id_employee:
-                        total_number_of_task += 1
-                        if tod['completed'] is True:
-                            number_of_done_task += 1
-                            task_title.append(tod['title'])
+                        task_data.append(tod)
 
-        # Calling the function to export to CSV
-        export_to_csv(employee_name, number_of_done_task, total_number_of_task, task_title)
+        # Call the function to export data to CSV
+        export_to_csv(id_employee, employee_name, task_data)
 
 
-def export_to_csv(employee_name, number_of_done_task, total_number_of_task, task_title):
+def export_to_csv(user_id, employee_name, task_data):
     """
     Exports the employee information to a CSV file
     """
-    filename = f"employee_{employee_name.replace(' ', '_')}_tasks.csv"
+    filename = f"{user_id}.csv"
 
     with open(filename, mode='w', newline='') as csvfile:
         csv_writer = csv.writer(csvfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-        csv_writer.writerow(['Employee Name', 'Number of Done Tasks', 'Total Number of Tasks'])
-        csv_writer.writerow([employee_name, number_of_done_task, total_number_of_task])
-        csv_writer.writerow([])  # Add an empty row for separation
-        csv_writer.writerow(['Completed Tasks'])
-        for title in task_title:
-            csv_writer.writerow([title])
+        csv_writer.writerow(['User ID', 'Username', 'Task Completed Status', 'Task Title'])
 
-    print(f"Data has been exported to {filename}")
+        for task in task_data:
+            csv_writer.writerow([user_id, employee_name, task['completed'], task['title']])
+
+    print(f"Employee data has been exported to {filename}")
 
 if __name__ == "__main__":
     information_employee()
