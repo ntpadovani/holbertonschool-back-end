@@ -27,7 +27,7 @@ def information_employee():
 
         for user in response_json_usr:
             if (user['id'] == id_employee):
-                employee_name = user['name']
+                employee_name = user['username']
 
                 for tod in response_json_tod:
                     if tod['userId'] == id_employee:
