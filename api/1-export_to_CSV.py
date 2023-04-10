@@ -44,7 +44,7 @@ def export_to_csv(user_id, employee_name, task_data):
     filename = f"{user_id}.csv"
 
     with open(filename, mode='w', newline='') as csvfile:
-        csv_writer = csv.writer(csvfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+        csv_writer = csv.writer(csvfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_ALL)
 
         for task in task_data:
             csv_writer.writerow([user_id, employee_name, task['completed'], task['title']])
