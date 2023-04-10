@@ -30,7 +30,7 @@ def information_employee():
 
         for user in response_json_usr:
             if (user['id'] == id_employee):
-                employee_name = user['name']
+                employee_name = user['username']
 
                 for tod in response_json_tod:
                     if tod['userId'] == id_employee:
@@ -38,12 +38,6 @@ def information_employee():
                         if tod['completed'] is True:
                             number_of_done_task += 1
                             task_title.append(tod['title'])
-
-        print('Employee {} is done with tasks({}/{}):'
-              .format(employee_name, number_of_done_task,
-                      total_number_of_task))
-        for title in task_title:
-            print('\t {}'.format(title))
 
         # Calling the function to export to CSV
         export_to_csv(employee_name, number_of_done_task, total_number_of_task, task_title)
@@ -64,8 +58,7 @@ def export_to_csv(employee_name, number_of_done_task, total_number_of_task, task
         for title in task_title:
             csv_writer.writerow([title])
 
-    print(f"Employee data has been exported to {filename}")
+    print(f"Data has been exported to {filename}")
 
 if __name__ == "__main__":
     information_employee()
-
