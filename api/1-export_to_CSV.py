@@ -7,6 +7,7 @@ from requests import get
 from sys import argv
 import csv
 
+
 def information_employee():
     """
     Returns information about employees
@@ -46,6 +47,7 @@ def information_employee():
 
         # Calling the function to export to CSV
         export_to_csv(employee_name, number_of_done_task, total_number_of_task, task_title)
+
 
 def export_to_csv(employee_name, number_of_done_task, total_number_of_task, task_title):
     """
